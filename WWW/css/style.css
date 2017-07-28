@@ -81,21 +81,22 @@ button#maintenance{
 	float: left;
 }
 
+/* Beer Graph Sizes */
 #beer-panel{
-	width: 980px;
-    height: 525px;
+	width: 990px;
+    height: 580px;
 	margin-bottom: 10px;
     float:left;
 }
 
 #top-bar{
-	width: 968px;
+	width: 978px;
 	margin: 5px;
     float:left;
 }
 
 #control-panel{
-	width: 976px;
+	width: 986px;
     min-height: 390px;
     float: left;
 }
