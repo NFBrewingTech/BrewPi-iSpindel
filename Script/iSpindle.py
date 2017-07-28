@@ -39,8 +39,8 @@ SQL_USER = 'iSpindle'                   # DB user
 SQL_PASSWORD = 'ohyeah'                 # DB user's password (might want to change this)
 
 # Ubidots Forwarding (using existing account)
-UBIDOTS = 1                                     # change to 1 to enable output to ubidots and enter your token below
-UBI_TOKEN = '597806edc03f970deff78ba7'    # ubidots token (get this by registering with ubidots.com and then enter it here)
+UBIDOTS = 0                                     # change to 1 to enable output to ubidots and enter your token below
+UBI_TOKEN = 'nullnullnullnull'    # ubidots token (get this by registering with ubidots.com and then enter it here)
 
 # ADVANCED
 ENABLE_ADDCOLS = 0                              # Enable dynamic columns (configure pre-defined in lines 128-129)
