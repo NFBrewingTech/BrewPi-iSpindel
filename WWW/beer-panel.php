@@ -85,6 +85,27 @@
 	    		<div class="beer-chart-legend-value">--</div>
 	    		<br class="crystal" />
 	    	</div>
+            <!-- Adding Hydrometer lines -->
+			<div class="beer-chart-legend-row spinTemp">
+				<div class="toggle spinTemp" onClick="toggleLine(this)"></div>
+	    		<div class="beer-chart-legend-label" onClick="toggleLine(this)">iSpindel Tmp</div>
+	    		<div class="beer-chart-legend-value">--</div>
+	    		<br class="crystal" />
+	    	</div>
+			<div class="beer-chart-legend-row spinSG">
+				<div class="toggle spinSG" onClick="toggleLine(this)"></div>
+	    		<div class="beer-chart-legend-label" onClick="toggleLine(this)">iSpindel SG</div>
+	    		<div class="beer-chart-legend-value">--</div>
+	    		<br class="crystal" />
+	    	</div>
+
+	    	<div class="beer-chart-legend-row spinBatt">
+				<div class="toggle spinBatt" onClick="toggleLine(this)"></div>
+	    		<div class="beer-chart-legend-label" onClick="toggleLine(this)">iSpindel Batt</div>
+	    		<div class="beer-chart-legend-value">--</div>
+	    		<br class="crystal" />
+	    	</div>
+
 	    	<div class="beer-chart-legend-row state">
 				<div class="state-indicator"></div>
 	    		<div class="beer-chart-legend-label"></div>

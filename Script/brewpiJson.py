@@ -18,7 +18,10 @@ from datetime import datetime
 import time
 import os
 import re
+#import TiltHydrometer
 
+
+#Includes changes for hydrometer data
 jsonCols = ("\"cols\":[" +
             "{\"type\":\"datetime\",\"id\":\"Time\",\"label\":\"Time\"}," +
             "{\"type\":\"number\",\"id\":\"BeerTemp\",\"label\":\"Beer temperature\"}," +
@@ -28,7 +31,10 @@ jsonCols = ("\"cols\":[" +
             "{\"type\":\"number\",\"id\":\"FridgeSet\",\"label\":\"Fridge setting\"}," +
             "{\"type\":\"string\",\"id\":\"FridgeAnn\",\"label\":\"Fridge Annotate\"}," +
             "{\"type\":\"number\",\"id\":\"RoomTemp\",\"label\":\"Room temp.\"}," +
-            "{\"type\":\"number\",\"id\":\"State\",\"label\":\"State\"}" +
+			"{\"type\":\"number\",\"id\":\"State\",\"label\":\"State\"}," +
+            "{\"type\":\"number\",\"id\":\"spinSG\",\"label\":\"iSpindel SG\"}," +
+			"{\"type\":\"number\",\"id\":\"spinTemp\",\"label\":\"iSpindel Temperature\"}," +
+			"{\"type\":\"number\",\"id\":\"spinBatt\",\"label\":\"iSpindel Battery\"}" +
             "]")
 
 
@@ -96,9 +102,24 @@ def addRow(jsonFileName, row):
 		jsonFile.write("{\"v\":" + str(row['RoomTemp']) + "},")
 
 	if row['State'] is None:
+		jsonFile.write("null,")
+	else:
+		jsonFile.write("{\"v\":" + str(row['State']) + "},")
+
+	if row['spinSG'] is None:
+		jsonFile.write("null,")
+	else:
+		jsonFile.write("{\"v\":" + str(row['spinSG']) + "},")
+
+	if row['spinTemp'] is None:
+		jsonFile.write("null,")
+	else:
+		jsonFile.write("{\"v\":" + str(row['spinTemp']) + "},")
+
+	if row['spinBatt'] is None:
 		jsonFile.write("null")
 	else:
-		jsonFile.write("{\"v\":" + str(row['State']) + "}")
+		jsonFile.write("{\"v\":" + str(row['spinBatt']) + "}")
 
 	# rewrite end of json file
 	jsonFile.write("]}]}")
