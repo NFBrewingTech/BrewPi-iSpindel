@@ -20,24 +20,18 @@ import json
 DEBUG = 0                               # Set to 1 to enable debug output on console
 PORT = 9501                             # TCP Port to listen to
 HOST = '0.0.0.0'                        # Allowed IP range. Leave at 0.0.0.0 to allow connections from anywhere
-CELSIUS = 0                             # Set to 1 to log temperature in Celcius
 
 # CSV
-CSV = 1                                 # Set to 1 if you want CSV (text file) output
-OUTPATH = '/var/www/html/data/iSpindel/'		# CSV output file path; filename will be name_id.csv
-DELIMITER = ','                         # CSV delimiter (normally use ; for Excel)
+CSV = 0                                 # Set to 1 if you want CSV (text file) output
+OUTPATH = '/home/pi/iSpindle'		# CSV output file path; filename will be name_id.csv
+DELIMITER = ';'                         # CSV delimiter (normally use ; for Excel)
 NEWLINE='\r\n'                          # newline (\r\n for windows clients)
 DATETIME = 1                            # Leave this at 1 to include Excel compatible timestamp in CSV
-
-# Feed to BrewPI
-BPI = 1                                 # Set to 1 if you want CSV (text file) output
-OUTPATHPI = '/var/www/html/data/iSpindel/'		# CSV output file path; filename will be name_id.csv
-DELIMITER = ','                        # CSV delimiter (normally use ; for Excel)
-DATETIMEPI = 0 
-NEWLINE='\r\n'                          # newline (\r\n for windows clients)
+LINES = 10								# Keep XX lines of data
+AVERAGE = 3								# Average the SG f the last X
 
 # MySQL
-SQL = 0                                 # 1 to enable output to MySQL database. You'll usually want this.
+SQL = 1                                 # 1 to enable output to MySQL database. You'll usually want this.
 SQL_HOST = '127.0.0.1'                  # Database host name (default: localhost - 127.0.0.1 loopback interface)
 SQL_DB = 'iSpindle'                     # Database name
 SQL_TABLE = 'Data'                      # Table name
@@ -45,8 +39,8 @@ SQL_USER = 'iSpindle'                   # DB user
 SQL_PASSWORD = 'ohyeah'                 # DB user's password (might want to change this)
 
 # Ubidots Forwarding (using existing account)
-UBIDOTS = 1                                     # change to 1 to enable output to ubidots and enter your token below
-UBI_TOKEN = 'tokentokentokentokentoken'    # ubidots token (get this by registering with ubidots.com and then enter it here)
+UBIDOTS = 0                                     # change to 1 to enable output to ubidots and enter your token below
+UBI_TOKEN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'    # ubidots token (get this by registering with ubidots.com and then enter it here)
 
 # ADVANCED
 ENABLE_ADDCOLS = 0                              # Enable dynamic columns (configure pre-defined in lines 128-129)
@@ -89,10 +83,7 @@ def handler(clientsock,addr):
                 spindle_name = jinput['name']
                 spindle_id = jinput['ID']
                 angle = jinput['angle']
-                if CELSIUS == 1:
-                	temperature = jinput['temperature'] 
-                else:
-                	temperature = (jinput['temperature'] * 1.8) + 32
+                temperature = jinput['temperature']
                 battery = jinput['battery']
 		try:
 		   gravity = jinput['gravity']
@@ -121,7 +112,6 @@ def handler(clientsock,addr):
             try:
                 filename = OUTPATH + spindle_name + '_' + spindle_id + '.csv'
                 with open(filename, 'a') as csv_file:
-                	# a - append
                     # this would sort output. But we do not want that...
                     # import csv
                     # csvw = csv.writer(csv_file, delimiter=DELIMITER)
@@ -138,30 +128,6 @@ def handler(clientsock,addr):
                         outstr += DELIMITER + cdt.strftime('%x %X')
                     outstr += NEWLINE
                     csv_file.writelines(outstr)
-                    dbgprint(repr(addr) + ' - CSV data written.')
-            except Exception as e:
-                dbgprint(repr(addr) + ' CSV Error: ' + str(e))
-
-
-        if BPI == 1:
-            dbgprint(repr(addr) + ' - writing CSV')
-            try:
-                filenamepi = OUTPATHPI +  'SpinData.csv'
-                with open(filenamepi, 'w') as csv_file_bpi:
-                	# a - append
-                    # this would sort output. But we do not want that...
-                    # import csv
-                    # csvw = csv.writer(csv_file, delimiter=DELIMITER)
-                    # csvw.writerow(jinput.values())
-                    outstr = ''
-                    if DATETIMEPI == 1:
-                        cdt = datetime.now()
-                        outstr +=  cdt.strftime('%x %X')   		    		
-                    outstr += DELIMITER + str(gravity) + DELIMITER
-                    outstr += str(battery) + DELIMITER
-                    outstr += str(temperature)
-                    outstr += NEWLINE
-                    csv_file_bpi.writelines(outstr)
                     dbgprint(repr(addr) + ' - CSV data written.')
             except Exception as e:
                 dbgprint(repr(addr) + ' CSV Error: ' + str(e))
